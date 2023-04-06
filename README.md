@@ -1,5 +1,4 @@
-![Baidu Research USA](/pic/baidu_research_logo.jpg)
-<img src="/pic/baidu_research_logo.jpg"  width="60%" alt="Baidu Research Logo">
+<img src="/pic/baidu_research_logo.jpg"  width="30%" alt="Baidu Research Logo">
 # Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity (LinearDesign)
 
 This repository contains the source code for the LinearDesign project.
