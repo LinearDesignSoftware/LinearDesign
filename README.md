@@ -1,4 +1,5 @@
 ![Baidu Research USA](/pic/baidu_research_logo.jpg)
+<img src="/pic/baidu_research_logo.jpg"  width="60%" alt="Baidu Research Logo">
 # Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity (LinearDesign)
 
 This repository contains the source code for the LinearDesign project.
@@ -89,3 +90,7 @@ mRNA structure: ......(((.((....)))))
 mRNA folding free energy: -1.10 kcal/mol; mRNA CAI: 0.695
 Runtime: 0.002 seconds
 ```
+
+
+## Declarations
+Baidu Research has filed a patent for the LinearDesign algorithm that lists He Zhang, Liang Zhang, Ziyu Li, Kaibo Liu, Boxiang Liu, and Liang Huang as inventors.
