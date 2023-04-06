@@ -1,4 +1,4 @@
-# LinearDesign: Efficient Algorithms for Optimized mRNA Sequence Design
+# Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity (LinearDesign)
 
 This repository contains the source code for the LinearDesign project.
 
