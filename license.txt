@@ -1,0 +1,3 @@
+The LinearDesign code is freely accessible to all interested parties. It is free for academic/non-profit use and free for commercial research use.
+
+However, to use this software for the development of a commercial product, including but not limited to software, service, or pharmaceuticals, please contact the lead corresponding author for licensing.
