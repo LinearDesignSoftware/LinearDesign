@@ -14,12 +14,12 @@ lineardesign_2D: $(DEPS)
 	export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
 
 ifeq ($(UNAME_S), Linux)
-	if $(CXX) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/LinearDesign_linux64.so; then \
+	if $(CXX) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/libraries/LinearDesign_linux64.so; then \
 		echo "Linux system; compiled with g++; finished."; \
 		echo "Compilation Succeed!"; \
 	else \
 		echo "Try another .so file."; \
-		if $(CXX) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/LinearDesign_linux64_old.so; then \
+		if $(CXX) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/libraries/LinearDesign_linux64_old.so; then \
 			echo "Linux system; compiled with g++; finished."; \
 			echo "Compilation Succeed!"; \
 		else \
@@ -28,7 +28,7 @@ ifeq ($(UNAME_S), Linux)
 	fi 
 else
 	if [[ $(UNAME_M) == 'arm64' ]]; then \
-		if 	$(CLA) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/LinearDesign_Mac_M1.so; then \
+		if 	$(CLA) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/libraries/LinearDesign_Mac_M1.so; then \
 			echo "Mac M1 system; compiled with clang++; finished."; \
 			echo "Compilation Succeed!"; \
 			echo "You may encounter a pop-up message at the first run. If so, please go to System Preferences -> Security & Privacy -> General to allow LinearDesign_Mac_M1.so to open. See README.md for details."; \
@@ -36,7 +36,7 @@ else
 			echo "Compilation failed! Make sure it is either Linux-64 or Mac."; \
 		fi \
 	else \
-		if 	$(CLA) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/LinearDesign_Mac_x86.so; then \
+		if 	$(CLA) $(CXXFLAGS) src/linear_design.cpp -o bin/LinearDesign_2D src/Utils/libraries/LinearDesign_Mac_x86.so; then \
 			echo "Mac x86_64 system; compiled with clang++; finished."; \
 			echo "Compilation Succeed!"; \
 			echo "You may encounter a pop-up message at the first run. If so, please go to System Preferences -> Security & Privacy -> General to allow LinearDesign_Mac_x86.so to open. See README.md for details."; \
