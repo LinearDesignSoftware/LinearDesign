@@ -4,7 +4,7 @@
 
 This repository contains the source code for the LinearDesign project.
 
-He Zhang†, Liang Zhang†, Ang Lin†, Congcong Xu†, Ziyu Li, Kaibo Liu, Boxiang Liu, Xiaopin Ma, Fanfan Zhao, Huiling Jiang, Chunxiu Chen, Haifa Shen, Hangwen Li*, David H. Mathews*, Yujian Zhang*, Liang Huang*<sup>#</sup>. Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity. Under revision at Nature.
+He Zhang†, Liang Zhang†, Ang Lin†, Congcong Xu†, Ziyu Li, Kaibo Liu, Boxiang Liu, Xiaopin Ma, Fanfan Zhao, Huiling Jiang, Chunxiu Chen, Haifa Shen, Hangwen Li*, David H. Mathews*, Yujian Zhang*, Liang Huang†*<sup>#</sup>. Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity. Under revision at Nature.
 
 † contributed equally, 
 \* corresponding authors, 
