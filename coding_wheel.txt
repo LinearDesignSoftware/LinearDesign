@@ -1,0 +1,21 @@
+Phe	U U CU
+Leu	C U GCUA	U U GA	
+Ser	U C GCUA	A G CU
+Tyr	U A CU
+STOP	U A GA	U G A
+Cys	U G CU
+Trp	U G G
+Pro	C C GCUA
+His	C A CU
+Gln	C A GA
+Arg	C G GCUA	A G GA
+Ile	A U CUA
+Met	A U G
+Thr	A C GCUA
+Asn	A A CU
+Lys	A A GA
+Val	G U GCUA
+Asp	G A CU
+Glu	G A GA
+Gly	G G GCUA
+Ala	G C GCUA
