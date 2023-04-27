@@ -4,10 +4,18 @@
 
 This repository contains the source code for the LinearDesign project.
 
+<<<<<<< HEAD
 He Zhang†, Liang Zhang†, Ang Lin†, Congcong Xu†, Ziyu Li, Kaibo Liu, Boxiang Liu, Xiaopin Ma, Fanfan Zhao, Huiling Jiang, Chunxiu Chen, Haifa Shen, Hangwen Li*, David H. Mathews*, Yujian Zhang*, Liang Huang*<sub>#</sub>. Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity. Under revision at Nature
 † contributed equally
 \* corresponding authors
 \# lead corresponding author
+=======
+He Zhang†, Liang Zhang†, Ang Lin†, Congcong Xu†, Ziyu Li, Kaibo Liu, Boxiang Liu, Xiaopin Ma, Fanfan Zhao, Huiling Jiang, Chunxiu Chen, Haifa Shen, Hangwen Li*, David H. Mathews*, Yujian Zhang*, Liang Huang†*<sup>#</sup>. Algorithm for Optimized mRNA Design Improves Stability and Immunogenicity. Under revision at Nature.
+
+† contributed equally, 
+\* corresponding authors, 
+<sup>#</sup> lead corresponding author
+>>>>>>> 22684cf528a9b0a38e133b787f2373e8c3e01cd4
 
 ## Dependencies
 Clang 11.0.0 (or above) or GCC 4.8.5 (or above)
