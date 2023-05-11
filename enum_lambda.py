@@ -7,7 +7,7 @@ import os
 import pandas as pd
 import pprint
 
-DATAPATH = "./data/proteins/testseq"
+DATAPATH = "./data/proteins/CRISPR_protein.fasta"
 DESIGNPATH = "./designs/proteins"
 LAMBDA = [i for i in range(0, 100, 5)]
 
@@ -38,7 +38,7 @@ def split_directory_cleanup(path: pathlib.Path) -> None:
             print(f"Failed to delete {file_path}. Reason: {e}")
 
 
-def parse_result(results: list, labmda_) -> pd.DataFrame:
+def parse_result(results: list, lambda_) -> pd.DataFrame:
     # Turn this result into a dataframe
     """
     >seq2

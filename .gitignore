@@ -166,5 +166,5 @@ cython_debug/
 *.fa
 *.txt
 *.csv
-
+*.xlsx
 /data/*
