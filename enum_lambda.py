@@ -4,6 +4,7 @@ from multiprocessing import cpu_count
 import pathlib
 import re
 import os
+import pandas as pd
 
 DATAPATH = "./data/proteins/testseq"
 DESIGNPATH = "./designs/proteins"
@@ -37,6 +38,39 @@ def split_directory_cleanup(path: pathlib.Path) -> None:
             print(f"Failed to delete {file_path}. Reason: {e}")
 
 
+def parse_result(results: list) -> pd.DataFrame:
+    # Turn this result into a dataframe
+    """
+    >seq2
+    mRNA sequence:  AUGCUGGAUCAGGUCAACAAGCUGAAGUACCCUGAGGUUUCGUUGACCUGA
+    mRNA structure: ........(((((((((((((((..((....))..))))).))))))))))
+    mRNA folding free energy: -20.70 kcal/mol; mRNA CAI: 0.768
+    """
+
+    # Split the result into individual records
+    parsed = []
+    for result in results:
+        records = result.split(">")[1:][0]
+
+        # Split each record into its components
+        records = records.split("\n")
+
+        # Data cleaning
+        parsed.append(
+            {
+                "Name": records[0],
+                "mRNA sequence": records[1].split(":")[1].strip(),
+                "mRNA structure": records[2].split(":")[1].strip(),
+                "MFE (kcal/mol)": float(
+                    records[3].split(";")[0].split(":")[1].split()[0].strip()
+                ),
+                "CAI": float(records[3].split(";")[1].split(":")[1].strip()),
+            }
+        )
+
+    return pd.DataFrame.from_dict(parsed)
+
+
 if __name__ == "__main__":
     path = pathlib.Path(DATAPATH)
     split_path = path.parent / "split"
@@ -68,10 +102,13 @@ if __name__ == "__main__":
             lambda_group = map(
                 lambda x: re.sub(pattern, "", x), lambda_group
             )  # Remove iteration mark
+            lambda_group = map(lambda x: x[:-1], lambda_group)  # Remove tailing \n
 
             # # Print the output
             # print(output)
-
             pathlib.Path(DESIGNPATH).mkdir(parents=True, exist_ok=True)
-            with open(f"{DESIGNPATH}/{path.name}+lambda_{lambda_}.txt", "w") as f:
-                f.writelines(lambda_group)
+            df = parse_result(list(lambda_group))
+            df.to_csv(f"{DESIGNPATH}/{path.name}+lambda_{lambda_}.csv", index=False)
+
+            # with open(f"{DESIGNPATH}/{path.name}+lambda_{lambda_}.txt", "w") as f:
+            #     f.writelines(lambda_group)
