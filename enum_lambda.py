@@ -5,11 +5,11 @@ import pathlib
 import re
 import os
 import pandas as pd
+import pprint
 
 DATAPATH = "./data/proteins/testseq"
 DESIGNPATH = "./designs/proteins"
-# LAMBDA = [i for i in range(0, 100, 5)]
-LAMBDA = [0]
+LAMBDA = [i for i in range(0, 100, 5)]
 
 
 def subprocess_lineardesign(cmd1, cmd2):
@@ -38,7 +38,7 @@ def split_directory_cleanup(path: pathlib.Path) -> None:
             print(f"Failed to delete {file_path}. Reason: {e}")
 
 
-def parse_result(results: list) -> pd.DataFrame:
+def parse_result(results: list, labmda_) -> pd.DataFrame:
     # Turn this result into a dataframe
     """
     >seq2
@@ -65,9 +65,11 @@ def parse_result(results: list) -> pd.DataFrame:
                     records[3].split(";")[0].split(":")[1].split()[0].strip()
                 ),
                 "CAI": float(records[3].split(";")[1].split(":")[1].strip()),
+                "lambda": lambda_,
             }
         )
 
+    pprint.pprint(parsed)
     return pd.DataFrame.from_dict(parsed)
 
 
@@ -84,9 +86,11 @@ if __name__ == "__main__":
     sp.run(["split", "-l", "2", DATAPATH, f"./{str(split_path)}/"])
     items = list(pathlib.Path(split_path).glob("*"))
 
+    designs = []
     with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
         # output redirection from stdout to file
         for lambda_ in LAMBDA:
+            print(f"Running lambda = {lambda_}...")
             lambda_group = []
             for item in items:
                 # Define the first command in the pipeline
@@ -107,8 +111,7 @@ if __name__ == "__main__":
             # # Print the output
             # print(output)
             pathlib.Path(DESIGNPATH).mkdir(parents=True, exist_ok=True)
-            df = parse_result(list(lambda_group))
-            df.to_csv(f"{DESIGNPATH}/{path.name}+lambda_{lambda_}.csv", index=False)
+            df = parse_result(list(lambda_group), lambda_)
+            designs.append(df)
 
-            # with open(f"{DESIGNPATH}/{path.name}+lambda_{lambda_}.txt", "w") as f:
-            #     f.writelines(lambda_group)
+        pd.concat(designs).to_csv(f"{DESIGNPATH}/{path.name}+design.csv", index=False)
