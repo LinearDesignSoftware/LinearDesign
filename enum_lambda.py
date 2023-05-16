@@ -7,9 +7,9 @@ import os
 import pandas as pd
 import pprint
 
-DATAPATH = "./data/proteins/testseq"
+DATAPATH = "./data/proteins/nuclease_wildtype.fasta"
 DESIGNPATH = "./designs/proteins/"
-LAMBDA = [0]
+LAMBDA = [0.1, 0.5, 1, 2, 5, 10, 20, 50, 100]
 
 
 def input_preprocessing(path: str) -> str:
@@ -21,7 +21,7 @@ def input_preprocessing(path: str) -> str:
         buffer = []
         for line in lines:
             temp = line.split("\n")
-            buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}\n')
+            buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}*\n')
 
         preprocessed_file_path = f"{path}_preprocessed.fasta"
         with open(preprocessed_file_path, "w") as d:
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     items = list(pathlib.Path(split_path).glob("*"))
 
     designs = []
-    with ProcessPoolExecutor(max_workers=1) as executor:  # DEBUG: cpu_count()
+    with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
         # output redirection from stdout to file
         for lambda_ in LAMBDA:
             print(f"Running lambda = {lambda_}...")
