@@ -1,4 +1,4 @@
-name: /Users/juyoungshin/Documents/code_repo/LinearDesign/.conda3.9
+name: LinearDesign
 channels:
   - plotly
   - conda-forge
@@ -65,7 +65,6 @@ dependencies:
   - pip:
     - attrs==23.1.0
     - biopython==1.81
-    - cai==1.0.5.dev3+gb6e017a.d20230515
     - click==8.1.3
     - fastjsonschema==2.16.3
     - jsonschema==4.17.3
