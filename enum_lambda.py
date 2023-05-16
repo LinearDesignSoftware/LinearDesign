@@ -8,8 +8,8 @@ import pandas as pd
 import pprint
 
 DATAPATH = "./data/proteins/CRISPR_protein.fasta"
-DESIGNPATH = "./designs/proteins"
-LAMBDA = [i for i in range(0, 100, 5)]
+DESIGNPATH = "./designs/proteins/"
+LAMBDA = [0, 1, 4, 10, 1000]
 
 
 def subprocess_lineardesign(cmd1, cmd2):
