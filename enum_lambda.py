@@ -7,20 +7,51 @@ import os
 import pandas as pd
 import pprint
 
-DATAPATH = "./data/proteins/CRISPR_protein.fasta"
+DATAPATH = "./data/proteins/nuclease_wildtype.fasta"
 DESIGNPATH = "./designs/proteins/"
-LAMBDA = [0, 1, 4, 10, 1000]
+LAMBDA = [0.1, 0.5, 1, 2, 5, 10, 20, 50, 100]
 
 
-def subprocess_lineardesign(cmd1, cmd2):
-    # Create the pipeline by connecting the two commands using a pipe
-    p1 = sp.Popen(cmd1, stdout=sp.PIPE)
-    p2 = sp.Popen(cmd2, stdin=p1.stdout, stdout=sp.PIPE)
+def input_preprocessing(path: str) -> str:
+    """
+    Preprocess the input file to remove the unnecessary line breaks
+    """
+    with open(path, "r") as f:
+        lines = f.read().split(">")[1:]  # Remove the first empty string
+        buffer = []
+        for line in lines:
+            temp = line.split("\n")
+            buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}*\n')
 
-    # Run the pipeline and capture the output
-    output, error = p2.communicate()
+        preprocessed_file_path = f"{path}_preprocessed.fasta"
+        with open(preprocessed_file_path, "w") as d:
+            d.writelines(buffer)
+        return preprocessed_file_path
 
-    return output
+
+def subprocess_lineardesign(split_protein_sequence: str, cmd: list):
+    """
+    This function takes a protein sequence file and a command list as inputs, runs a pipeline using the
+    command list on the file, and returns the output.
+
+    :param split_protein_sequence: The parameter `split_protein_sequence` is a string that represents
+    the file path to a text file containing a protein sequence that has been split into multiple lines
+    :type split_protein_sequence: str
+    :param cmd: cmd is a list that contains the command and arguments to be executed by the
+    subprocess. It is passed as an argument to the Popen function to create a new process. The command
+    and arguments in cmd should be specified as separate strings in the list
+    :type cmd: list
+    :return: The output of the pipeline is being returned.
+    """
+
+    with open(split_protein_sequence, "r") as f:
+        process = sp.Popen(cmd, stdin=f, stdout=sp.PIPE)
+
+        # Run the pipeline and capture the output
+        output, error = process.communicate()
+        if error is not None:
+            print(error)
+        return output
 
 
 def split_directory_cleanup(path: pathlib.Path) -> None:
@@ -82,8 +113,8 @@ if __name__ == "__main__":
         print(f"Directory {split_path} already exists.")
         print(f"Cleaning up {split_path}...")
         split_directory_cleanup(split_path)
-
-    sp.run(["split", "-l", "2", DATAPATH, f"./{str(split_path)}/"])
+    corrected_fasta_path = input_preprocessing(DATAPATH)
+    sp.run(["split", "-l", "2", corrected_fasta_path, f"./{str(split_path)}/"])
     items = list(pathlib.Path(split_path).glob("*"))
 
     designs = []
@@ -93,12 +124,10 @@ if __name__ == "__main__":
             print(f"Running lambda = {lambda_}...")
             lambda_group = []
             for item in items:
-                # Define the first command in the pipeline
-                cmd1 = ["cat", f"{str(item)}"]
-                # Define the second command in the pipeline
-                cmd2 = ["./lineardesign", "-l", str(lambda_)]
+                # Define the command in the pipeline
+                cmd = ["./lineardesign", "-l", str(lambda_)]
 
-                future = executor.submit(subprocess_lineardesign, cmd1, cmd2)
+                future = executor.submit(subprocess_lineardesign, f"{str(item)}", cmd)
                 lambda_group.append(future)
 
             pattern = "j=\d*\\r"
