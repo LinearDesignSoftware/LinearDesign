@@ -170,3 +170,4 @@ cython_debug/
 /data/*
 *.html
 *.png
+bin/*
