@@ -6,27 +6,11 @@ import re
 import os
 import pandas as pd
 import pprint
+from text_processing import input_preprocessing
 
 DATAPATH = "./data/proteins/nuclease_wildtype.fasta"
 DESIGNPATH = "./designs/proteins/"
-LAMBDA = [0.1, 0.5, 1, 2, 5, 10, 20, 50, 100]
-
-
-def input_preprocessing(path: str) -> str:
-    """
-    Preprocess the input file to remove the unnecessary line breaks
-    """
-    with open(path, "r") as f:
-        lines = f.read().split(">")[1:]  # Remove the first empty string
-        buffer = []
-        for line in lines:
-            temp = line.split("\n")
-            buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}*\n')
-
-        preprocessed_file_path = f"{path}_preprocessed.fasta"
-        with open(preprocessed_file_path, "w") as d:
-            d.writelines(buffer)
-        return preprocessed_file_path
+LAMBDA = [0, 0.1, 0.2, 0.5, 1, 2, 5, 10, 1000]
 
 
 def subprocess_lineardesign(split_protein_sequence: str, cmd: list):
