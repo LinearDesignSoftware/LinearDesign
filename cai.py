@@ -16,4 +16,5 @@ def calc_cai(transcript):
         answer = 2 ** (cai / (len(transcript) / 3 - 1))
     except KeyError:
         print("ERROR: Invalid codon in transcript")
+        raise
     return answer

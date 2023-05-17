@@ -1,7 +1,7 @@
 # Description: This file contains the functions for text processing
 
 
-def input_preprocessing(path: str) -> str:
+def input_preprocessing(path: str, mode=None) -> str:
     """
     Preprocess the input file to remove the unnecessary line breaks
     """
@@ -10,7 +10,10 @@ def input_preprocessing(path: str) -> str:
         buffer = []
         for line in lines:
             temp = line.split("\n")
-            buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}*\n')
+            if mode is None:
+                buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}*\n')
+            elif mode == "RNA":
+                buffer.append(f'>{temp[0]}\n{"".join(temp[1:])}\n')
 
         preprocessed_file_path = f"{path}_preprocessed.fasta"
         with open(preprocessed_file_path, "w") as d:
