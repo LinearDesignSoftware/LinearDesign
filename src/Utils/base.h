@@ -48,28 +48,30 @@ std::ostream& operator<< (std::ostream& out, const std::vector<std::pair<T, T>>&
 namespace LinearDesign {
 
 namespace util {
-    std::vector<std::string> split(const std::string &s, char delim) {
-        std::vector<std::string> result;
-        std::stringstream ss(s);
-        std::string item;
-        while (getline(ss, item, delim)) 
-            result.push_back(item);
-        return result;
-    }
 
-    template <typename T>
-    constexpr T value_min() {
-        static_assert(std::is_integral<T>::value ||
-            std::is_floating_point<T>::value, "Int or float required.");
-        return std::numeric_limits<T>::lowest();
-    }
+// Split a string by a delimiter
+inline std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    std::stringstream ss(s);
+    std::string item;
+    while (getline(ss, item, delim)) 
+        elems.push_back(item);
+    return elems;
+}
 
-    template <typename T>
-    constexpr T value_max() {
-        static_assert(std::is_integral<T>::value ||
-            std::is_floating_point<T>::value, "Int or float required.");
-        return std::numeric_limits<T>::max();
-    }
+template <typename T>
+constexpr T value_min() {
+    static_assert(std::is_integral<T>::value ||
+        std::is_floating_point<T>::value, "Int or float required.");
+    return std::numeric_limits<T>::lowest();
+}
+
+template <typename T>
+constexpr T value_max() {
+    static_assert(std::is_integral<T>::value ||
+        std::is_floating_point<T>::value, "Int or float required.");
+    return std::numeric_limits<T>::max();
+}
 } /* util */
 
 
